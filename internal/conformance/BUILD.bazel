@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
+
+go_test(
+    name = "conformance_test",
+    srcs = ["conformance_test.go"],
+    deps = [
+        "//encoding/protojson",
+        "//encoding/prototext",
+        "//internal/testprotos/conformance",
+        "//proto",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["conformance_test.go"],
+    deps = [
+        "//encoding/protojson:go_default_library",
+        "//encoding/prototext:go_default_library",
+        "//internal/testprotos/conformance:go_default_library",
+        "//proto:go_default_library",
+    ],
+)

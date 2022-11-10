@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "dynamicpb",
+    srcs = ["dynamic.go"],
+    importpath = "google.golang.org/protobuf/types/dynamicpb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/errors",
+        "//reflect/protoreflect",
+        "//runtime/protoiface",
+        "//runtime/protoimpl",
+    ],
+)
+
+go_test(
+    name = "dynamicpb_test",
+    srcs = ["dynamic_test.go"],
+    deps = [
+        ":dynamicpb",
+        "//internal/testprotos/test",
+        "//internal/testprotos/test3",
+        "//proto",
+        "//reflect/protoreflect",
+        "//reflect/protoregistry",
+        "//testing/prototest",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["dynamic_test.go"],
+    deps = [
+        ":go_default_library",
+        "//internal/testprotos/test:go_default_library",
+        "//internal/testprotos/test3:go_default_library",
+        "//proto:go_default_library",
+        "//reflect/protoreflect:go_default_library",
+        "//reflect/protoregistry:go_default_library",
+        "//testing/prototest:go_default_library",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":dynamicpb",
+    visibility = ["//visibility:public"],
+)

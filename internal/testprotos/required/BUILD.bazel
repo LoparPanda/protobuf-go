@@ -1,0 +1,25 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+proto_library(
+    name = "required_proto",
+    srcs = ["required.proto"],
+    visibility = ["//:__subpackages__"],
+)
+
+go_library(
+    name = "required",
+    srcs = ["required.pb.go"],
+    importpath = "google.golang.org/protobuf/internal/testprotos/required",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//reflect/protoreflect",
+        "//runtime/protoimpl",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":required",
+    visibility = ["//:__subpackages__"],
+)

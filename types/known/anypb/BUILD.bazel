@@ -1,0 +1,50 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "anypb",
+    srcs = ["any.pb.go"],
+    importpath = "google.golang.org/protobuf/types/known/anypb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto",
+        "//reflect/protoreflect",
+        "//reflect/protoregistry",
+        "//runtime/protoimpl",
+    ],
+)
+
+go_test(
+    name = "anypb_test",
+    srcs = ["any_test.go"],
+    deps = [
+        ":anypb",
+        "//internal/testprotos/test",
+        "//proto",
+        "//reflect/protoreflect",
+        "//testing/protocmp",
+        "//types/known/emptypb",
+        "//types/known/wrapperspb",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["any_test.go"],
+    deps = [
+        ":go_default_library",
+        "//internal/testprotos/test:go_default_library",
+        "//proto:go_default_library",
+        "//reflect/protoreflect:go_default_library",
+        "//testing/protocmp:go_default_library",
+        "//types/known/emptypb:go_default_library",
+        "//types/known/wrapperspb:go_default_library",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":anypb",
+    visibility = ["//visibility:public"],
+)

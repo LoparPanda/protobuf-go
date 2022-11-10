@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "protodelim",
+    srcs = ["protodelim.go"],
+    importpath = "google.golang.org/protobuf/encoding/protodelim",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//encoding/protowire",
+        "//internal/errors",
+        "//proto",
+    ],
+)
+
+go_test(
+    name = "protodelim_test",
+    srcs = ["protodelim_test.go"],
+    deps = [
+        ":protodelim",
+        "//encoding/protowire",
+        "//internal/testprotos/test3",
+        "//testing/protocmp",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["protodelim_test.go"],
+    deps = [
+        ":go_default_library",
+        "//encoding/protowire:go_default_library",
+        "//internal/testprotos/test3:go_default_library",
+        "//testing/protocmp:go_default_library",
+        "@com_github_google_go_cmp//cmp:go_default_library",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":protodelim",
+    visibility = ["//visibility:public"],
+)
